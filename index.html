@@ -7,17 +7,25 @@
     <title>Countries</title>
     <link rel="stylesheet" href="css/bootstrap.css">
 </head>
-<body class="bg-primary d-flex align-items-center" style="height: 100dvh;">
+<body class="bg-dark d-flex align-items-center" style="height: 100dvh;">
 
-    <div class="container-fluid w-75 lg-w-50 bg-light p-5 rounded shadow-lg">
+    <div class="container-fluid w-75 bg-secondary p-5 rounded shadow-lg" id="my-container">
         <form action="" class="row justify-content-center">
-            <div class="col-6">
-                <input type="text" class="form-control" placeholder="enter country name">
+            <div class="col-8 col-lg-6">
+                <input type="text" class="form-control" placeholder="enter country name" id="search-box">
             </div>
-            <input type="submit" value="Enter" class="btn btn-primary col-1">
+            <input type="submit" value="Enter" class="btn btn-primary col-4 col-lg-1" id="my-btn">
         </form>
 
-        
+        <!-- view data -->
+        <div class="data d-flex justify-content-center align-items-center flex-column mt-2 text-light" style="display: none;">
+            <img src="" alt="" class="m-2" id="img" style="max-width: 16rem;">
+            <h3 class="m-2">Name: <span class="country-name"></span></h3>
+            <h3 class="m-2">Capital: <span class="capital"></span></h3>
+            <h3 class="m-2">Continent: <span class="continent"></span></h3>
+            <h3 class="m-2">Population: <span class="population"></span></h3>
+        </div>
+
     </div>
 
     <script src="js/main.js"></script>
