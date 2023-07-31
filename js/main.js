@@ -1,42 +1,45 @@
-var btn = document.getElementById("my-btn");
-var container = document.querySelector(".data");
+let container = document.querySelector(".data");
 let inp = document.getElementById("search-box");
+let form = document.querySelector("form");
 
-inp.addEventListener("keypress", function (event) {
-  // If the user presses the "Enter" key on the keyboard
-  if (event.key === "Enter") {
-    // Cancel the default action, if needed
-    event.preventDefault();
-    // Trigger the button element with a click
-    btn.click();
-  }
-});
-
-btn.addEventListener("click", function (e) {
+form.onsubmit = (e) => {
   e.preventDefault();
-
   let countryName = inp.value;
+  fetchData(countryName);
+  inp.value = "";
+}
 
-  fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`)
-    .then((response) => response.json())
-    .then((data) => {
-      let myImg = document.getElementById("img");
-      myImg.src = data[0].flags.png;
-      //   container.prepend(myImg);
+const fetchData = async (countryName) => {
+  if (countryName === "israel") {
+    countryName = "palestine";
+  }
 
-      let countryFullName = document.querySelector(".country-name");
-      countryFullName.innerHTML = data[0].altSpellings[1];
+  try {
+    let response = await fetch(`https://restcountries.com/v3.1/name/${countryName}?fullText=true`);
+    let data = await response.json();
+    console.log(data);
+    viewData(data);
+  } catch(err) {
+    throw new Error(err);
+  }
+}
 
-      let continent = document.querySelector(".continent");
-      continent.innerHTML = data[0].continents;
+const viewData = (data) => {
+  let myImg = document.getElementById("img");
+  myImg.src = data[0].flags.png;
 
-      let capital = document.querySelector(".capital");
-      capital.innerHTML = data[0].capital;
+  let countryFullName = document.querySelector(".country-name");
+  countryFullName.innerHTML = data[0].altSpellings[data[0].altSpellings.length - 1]; // last name in the API is the valid  one
 
-      let population = document.querySelector(".population");
-      population.innerHTML = data[0].population;
+  let continent = document.querySelector(".continent");
+  continent.innerHTML = data[0].continents;
 
-      console.log(data);
-      console.log(data[0].flags.png);
-    });
-});
+  let capital = document.querySelector(".capital");
+  capital.innerHTML = data[0].capital;
+
+  let population = document.querySelector(".population");
+  population.innerHTML = data[0].population;
+
+  console.log(data);
+  console.log(data[0].flags.png);
+}
